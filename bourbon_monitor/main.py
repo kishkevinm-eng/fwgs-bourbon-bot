@@ -5,6 +5,7 @@ import time
 import signal
 import sys
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 
 from .config import Config, Constants, setup_logging
 from .scraper import ProductScraper
@@ -53,7 +54,8 @@ def run_check(storage: ProductStorage, notifier: DiscordNotifier, is_first_run: 
         old_products = storage.load()
 
         # Scrape current products
-        new_products = scraper.scrape()
+        with ThreadPoolExecutor(max_workers=1) as executor:
+    new_products = executor.submit(scraper.scrape).result()
 
         # Safety check: if we found 0 products but had some before, skip this check
         if old_products and len(old_products) > 0 and len(new_products) == 0:

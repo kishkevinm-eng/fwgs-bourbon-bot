@@ -20,6 +20,7 @@ class ProductScraper:
         with BrowserManager(headless=self.headless) as browser:
             browser.navigate_and_prepare(self.target_url)
 
+
             # Wait longer for JS to render products
             browser.page.wait_for_timeout(5000)
 

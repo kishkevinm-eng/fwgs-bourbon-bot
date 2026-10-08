@@ -164,7 +164,7 @@ def main():
     logger.info(f"Target URL: {Config.TARGET_URL}")
     logger.info(f"Check Interval: {Config.CHECK_INTERVAL} minutes")
     logger.info(f"Headless Mode: {Config.HEADLESS}")
-    logger.info(f"Log File: {Config.LOG_FILE}")
+    logger.info(f"Log Directory: {Config.LOG_DIR}")
     logger.info(f"Data File: {Config.PRODUCTS_FILE}")
     logger.info("=" * 60)
 

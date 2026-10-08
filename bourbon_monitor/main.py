@@ -98,19 +98,14 @@ def run_check(storage: ProductStorage, notifier: DiscordNotifier, is_first_run: 
 
         # Detect products that went out of stock
         out_of_stock = []
-        if old_products and not is_first_run:
-            out_of_stock = storage.get_out_of_stock(old_products, new_products)
 
         # Track stock changes and detect hot items (only if not first run)
         # Returns only NEW hot items that haven't been notified yet
         hot_items_to_notify = []
-        if not is_first_run:
-            hot_items_to_notify = storage.track_stock_changes(old_products, new_products)
 
         # Send notifications for new products (but not on first run)
         if new_arrivals and not is_first_run:
             # Fetch direct URLs for new products by clicking them
-            scraper.fetch_product_urls(new_arrivals)
             notifier.send_new_products(new_arrivals)
             logger.info(f"NEW ARRIVALS: {len(new_arrivals)} product(s)")
         elif new_arrivals and is_first_run:
@@ -120,7 +115,6 @@ def run_check(storage: ProductStorage, notifier: DiscordNotifier, is_first_run: 
 
         # Send notifications for products that became available
         if now_available:
-            scraper.fetch_product_urls(now_available)
             notifier.send_now_available(now_available)
             logger.info(f"NOW AVAILABLE: {len(now_available)} product(s) went live!")
 

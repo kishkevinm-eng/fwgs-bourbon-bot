@@ -54,8 +54,10 @@ def run_check(storage: ProductStorage, notifier: DiscordNotifier, is_first_run: 
         old_products = storage.load()
 
         # Scrape current products
+        
         with ThreadPoolExecutor(max_workers=1) as executor:
-    new_products = executor.submit(scraper.scrape).result()
+            new_products = executor.submit(scraper.scrape).result()
+
 
         # Safety check: if we found 0 products but had some before, skip this check
         if old_products and len(old_products) > 0 and len(new_products) == 0:
